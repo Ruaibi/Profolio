@@ -572,7 +572,7 @@
   const db = getFirestore(app);
 
   document.getElementById("contactForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // 🔑 prevents 405 error
     const name = document.getElementById("name").value;
     const email = document.getElementById("email").value;
     const message = document.getElementById("message").value;
@@ -592,6 +592,7 @@
     }
   });
 </script>
+
 
     </body>
 </html>
