@@ -286,7 +286,7 @@
 
                                         <li>Business Strategy and Managemen</li>
                                     </ul>
-                                </div>t
+                                </div>
 
                                 <div class="tab-pane fade show" id="nav-strategy" role="tabpanel" aria-labelledby="nav-strategy-tab">
                                     <img src="images/craft 3.jpg" class="img-fluid" alt="">
@@ -555,9 +555,11 @@
 
 
 <script type="module">
+  // Import Firebase SDK modules
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.24.0/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.24.0/firebase-firestore.js";
 
+  // Your Firebase project configuration
   const firebaseConfig = {
     apiKey: "AIzaSyDIPxmT5VKcYgyg_FQiVpEqtJx0PHbqYbc",
     authDomain: "projamportfolio.firebaseapp.com",
@@ -568,22 +570,34 @@
     measurementId: "G-95BF20331M"
   };
 
+  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
+  // Handle form submission
   document.getElementById("contactForm").addEventListener("submit", async (e) => {
-    e.preventDefault(); // 🔑 prevents 405 error
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const message = document.getElementById("message").value;
+    e.preventDefault();
+
+    // Get form values
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    // Simple validation
+    if (!name || !email || !message) {
+      alert("Please fill in all fields.");
+      return;
+    }
 
     try {
+      // Save to Firestore
       await addDoc(collection(db, "messages"), {
         name,
         email,
         message,
         createdAt: serverTimestamp()
       });
+
       alert("✅ Message sent successfully!");
       document.getElementById("contactForm").reset();
     } catch (error) {
